@@ -11,6 +11,8 @@ const envVarsSchema = Joi.object()
       .required(),
     PORT: Joi.number().default(3000),
     MONGODB_URL: Joi.string().required().description("Mongo DB url"),
+    MAILID: Joi.string().email().required(),
+    PASSWORD: Joi.string().required(),
   })
   .unknown();
 const { value: envVars, error } = envVarsSchema
@@ -32,4 +34,6 @@ module.exports = {
       useUnifiedTopology: true,
     },
   },
+  mailid: envVars.MAILID,
+  password: envVars.PASSWORD,
 };

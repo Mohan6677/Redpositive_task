@@ -1,4 +1,6 @@
+const nodemailer = require("nodemailer");
 const httpStatus = require("http-status");
+const config = require("./config");
 const catchAsync = require("./catchAsync");
 const { appService } = require("./app.service");
 
@@ -35,9 +37,49 @@ const deleteUser = catchAsync(async (req, res) => {
   });
 });
 
+const sendMail = catchAsync(async (req, res) => {
+  let userIds = req.body.ids;
+  let details = ``;
+  for (let i = 0; i < userIds.length; i++) {
+    let user = await appService.getUserById(userIds[i]);
+    let singleLine = `name-${user.name} email-${user.email} mobile-${user.phonenumber} hobbies-${user.hobbies},\n`;
+    details += singleLine;
+  }
+  let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: config.mailid,
+      pass: config.password,
+    },
+  });
+
+  let mailOptions = {
+    from: username,
+    to: "info@redpositive.in",
+    subject: "coding task testing",
+    text: details,
+  };
+
+  transporter.sendMail(mailOptions, function (err, data) {
+    if (err) {
+      console.log(err);
+      return res.status(httpStatus.BAD_REQUEST).send({
+        error: "mail cant be sent",
+      });
+    } else {
+      if (i == emails.length - 1) {
+        return res.status(httpStatus.OK).send({
+          message: "mail sent successfully",
+        });
+      }
+    }
+  });
+});
+
 module.exports = {
   getUsers,
   createUser,
   modifyUser,
   deleteUser,
+  sendMail,
 };

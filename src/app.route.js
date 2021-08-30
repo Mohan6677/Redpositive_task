@@ -11,4 +11,6 @@ router.put("/update", appController.modifyUser);
 
 router.delete("/delete", appController.deleteUser);
 
+router.post("/sendEmail", appController.sendMail);
+
 module.exports = router;
