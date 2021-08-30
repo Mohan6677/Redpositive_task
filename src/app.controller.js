@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const httpStatus = require("http-status");
-const config = require("./config");
-const catchAsync = require("./catchAsync");
+const config = require("./utils/config");
+const catchAsync = require("./utils/catchAsync");
 const { appService } = require("./app.service");
 
 const getUsers = catchAsync(async (req, res) => {

@@ -1,6 +1,6 @@
 const User = require("./app.model");
 const httpStatus = require("http-status");
-const ApiError = require("./ApiError");
+const ApiError = require("./utils/ApiError");
 
 const getUserById = async (id) => {
   const user = await User.findById(id);

@@ -3,9 +3,9 @@ const compression = require("compression");
 const cors = require("cors");
 const httpStatus = require("http-status");
 const routes = require("./app.route");
-const ApiError = require("./ApiError");
+const ApiError = require("./utils/ApiError");
 const helmet = require("helmet");
-const { errorConverter, errorHandler } = require("./error");
+const { errorConverter, errorHandler } = require("./utils/error");
 
 const app = express();
 
